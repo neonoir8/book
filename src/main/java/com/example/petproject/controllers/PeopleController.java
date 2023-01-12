@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PeopleController {
 
     @GetMapping
-
+    public String getBooks() {
+        return null;
     }
 }
