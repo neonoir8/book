@@ -10,11 +10,11 @@ public class Book {
 
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name_of_book")
-    private String nameOfBook;
+    private String name;
 
     @Column(name="year_of_publishing")
     private int yearOfPublishing;
@@ -27,7 +27,7 @@ public class Book {
     }
 
     public Book(String nameOfBook, int yearOfPublishing) {
-        this.nameOfBook = nameOfBook;
+        this.name = nameOfBook;
         this.yearOfPublishing = yearOfPublishing;
     }
 
@@ -40,11 +40,11 @@ public class Book {
     }
 
     public String getNameOfBook() {
-        return nameOfBook;
+        return name;
     }
 
     public void setNameOfBook(String nameOfBook) {
-        this.nameOfBook = nameOfBook;
+        this.name = nameOfBook;
     }
 
     public int getYearOfPublishing() {
@@ -67,7 +67,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", nameOfBook='" + nameOfBook + '\'' +
+                ", name='" + name + '\'' +
                 ", yearOfPublishing=" + yearOfPublishing +
                 '}';
     }
