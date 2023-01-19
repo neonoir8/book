@@ -1,11 +1,13 @@
-package com.example.petproject.dto;
+package com.example.petproject.services.dto;
 
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
+@Data
 public class PersonDTO {
 
     @NotEmpty(message = "Name should not be empty")

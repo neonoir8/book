@@ -1,8 +1,7 @@
 package com.example.petproject.controllers;
 
-import com.example.petproject.dto.PersonDTO;
-import com.example.petproject.models.Book;
-import com.example.petproject.models.Person;
+import com.example.petproject.services.dto.PersonDTO;
+import com.example.petproject.entity.Person;
 import com.example.petproject.services.PeopleService;
 import com.example.petproject.util.PersonErrorResponse;
 import com.example.petproject.util.PersonNotCreatedException;
@@ -16,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,27 +66,27 @@ public class PeopleController {
     }
 
 
-    @ExceptionHandler
-    private ResponseEntity<PersonErrorResponse> handleException(PersonNotFoundException e) {
-        PersonErrorResponse response = new PersonErrorResponse(
-                "Person with this id was not found",
-                System.currentTimeMillis()
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<PersonErrorResponse> handleException(PersonNotCreatedException e) {
-        PersonErrorResponse response = new PersonErrorResponse(
-                e.getMessage(),
-                System.currentTimeMillis()
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-
-    }
+//    @DefaultExceptionHandler
+//    private ResponseEntity<PersonErrorResponse> handleException(PersonNotFoundException e) {
+//        PersonErrorResponse response = new PersonErrorResponse(
+//                "Person with this id was not found",
+//                System.currentTimeMillis()
+//        );
+//
+//        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+//
+//    }
+//
+//    @DefaultExceptionHandler
+//    private ResponseEntity<PersonErrorResponse> handleException(PersonNotCreatedException e) {
+//        PersonErrorResponse response = new PersonErrorResponse(
+//                e.getMessage(),
+//                System.currentTimeMillis()
+//        );
+//
+//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+//
+//    }
 
 
     private Person convertToPerson(PersonDTO personDTO) {

@@ -1,10 +1,14 @@
-package com.example.petproject.dto;
+package com.example.petproject.services.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 public class BookDTO {
 
     @NotEmpty(message="Name of the book should not be empty")
@@ -14,6 +18,7 @@ public class BookDTO {
 
     @Min(value = 0, message = "Year of publishing should be greater than 0")
     private int yearOfPublishing;
+
 
     public String getName() {
         return name;

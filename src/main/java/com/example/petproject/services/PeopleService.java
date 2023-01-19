@@ -1,6 +1,6 @@
 package com.example.petproject.services;
 
-import com.example.petproject.models.Person;
+import com.example.petproject.entity.Person;
 import com.example.petproject.repository.PeopleRepository;
 import com.example.petproject.util.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.petproject.models;
+package com.example.petproject.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
