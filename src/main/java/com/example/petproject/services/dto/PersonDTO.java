@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 public class PersonDTO {
 
     @NotEmpty(message = "Name should not be empty")

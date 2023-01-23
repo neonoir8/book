@@ -1,20 +1,14 @@
 package com.example.petproject.controllers;
 
-import com.example.petproject.services.dto.PersonDTO;
 import com.example.petproject.entity.Person;
-import com.example.petproject.services.PeopleService;
-import com.example.petproject.util.PersonErrorResponse;
-import com.example.petproject.util.PersonNotCreatedException;
-import com.example.petproject.util.PersonNotFoundException;
+import com.example.petproject.services.converter.PeopleConverter;
+import com.example.petproject.services.dto.PersonDTO;
+import com.example.petproject.services.PeopleBaseService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,79 +16,47 @@ import java.util.stream.Collectors;
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PeopleService peopleService;
-    private final ModelMapper modelMapper;
+    private final PeopleBaseService service;
+    private final PeopleConverter converter;
 
 
     @Autowired
-    public PeopleController(PeopleService peopleService, ModelMapper modelMapper) {
-        this.peopleService = peopleService;
-        this.modelMapper = modelMapper;
+    public PeopleController(PeopleBaseService service, PeopleConverter converter) {
+        this.service = service;
+        this.converter = converter;
 
     }
 
     @GetMapping
     public List<PersonDTO> getPeople() {
-        return peopleService.findAll().stream().map(this::convertToPersonDTO)
+        return service.getAll().stream().map(converter::convertToPersonDTO)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public PersonDTO getPerson(@PathVariable("id") int id) {
-        return convertToPersonDTO(peopleService.findOne(id));
+        Person person = service.get(id);
+        return converter.convertToPersonDTO(person);
 
     }
 
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDTO personDTO,
-                                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            StringBuilder errorMessage = new StringBuilder();
+    @ResponseStatus
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonDTO personDTO) {
+        service.create(converter.convertToPerson(personDTO));
 
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMessage.append(error.getField())
-                        .append(" - ").append(error.getDefaultMessage())
-                        .append(";");
-            }
+        return ResponseEntity.ok(HttpStatus.OK);
 
-            throw new PersonNotCreatedException((errorMessage.toString()));
-        }
+    }
 
-        peopleService.save(convertToPerson(personDTO));
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
+        Person person = service.delete(id);
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
 
-//    @DefaultExceptionHandler
-//    private ResponseEntity<PersonErrorResponse> handleException(PersonNotFoundException e) {
-//        PersonErrorResponse response = new PersonErrorResponse(
-//                "Person with this id was not found",
-//                System.currentTimeMillis()
-//        );
-//
-//        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-//
-//    }
-//
-//    @DefaultExceptionHandler
-//    private ResponseEntity<PersonErrorResponse> handleException(PersonNotCreatedException e) {
-//        PersonErrorResponse response = new PersonErrorResponse(
-//                e.getMessage(),
-//                System.currentTimeMillis()
-//        );
-//
-//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-//
-//    }
-
-
-    private Person convertToPerson(PersonDTO personDTO) {
-        return modelMapper.map(personDTO, Person.class);
-    }
-
-    private PersonDTO convertToPersonDTO(Person person) {
-        return modelMapper.map(person, PersonDTO.class);
-
-    }
 }
+

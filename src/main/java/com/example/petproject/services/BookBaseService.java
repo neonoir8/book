@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-
 public class BookBaseService implements BookService {
     private final BookRepository repository;
 
@@ -18,14 +17,23 @@ public class BookBaseService implements BookService {
         this.repository = repository;
     }
 
-
+    @Override
     public List<Book> getAll() {
         return repository.findAll();
     }
 
+    @Override
     public void create(Book book) {
         enrichBook(book);
         repository.save(book);
+    }
+
+    @Override
+    public Book delete(Integer id) {
+
+
+        repository.deleteById(id);
+        return null;
     }
 
     private void enrichBook(Book book) {

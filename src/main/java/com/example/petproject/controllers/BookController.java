@@ -46,4 +46,25 @@ public class BookController {
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
-}
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
+        Book book = service.delete(id);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+
+
+        }
+    }
+
+
+//@DeleteMapping("/tutorials/{id}")
+//  public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+//    try {
+//      tutorialRepository.deleteById(id);
+//      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    } catch (Exception e) {
+//      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//  }

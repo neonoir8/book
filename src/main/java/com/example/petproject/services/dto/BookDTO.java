@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 public class BookDTO {
 
     @NotEmpty(message="Name of the book should not be empty")

@@ -8,8 +8,10 @@ public interface BookService {
 
      Book get(Integer id);
 
-     public List<Book> getAll();
+     List<Book> getAll();
 
-     public void create(Book book);
+     void create(Book book);
+
+     Book delete(Integer id);
 
 }
