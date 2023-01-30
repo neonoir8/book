@@ -1,17 +1,20 @@
 package com.example.petproject.services;
 
 import com.example.petproject.entity.Book;
+import com.example.petproject.entity.Person;
 
 import java.util.List;
 
 public interface BookService {
 
-     Book get(Integer id);
+     Book getBookById(Integer id);
 
-     List<Book> getAll();
+     List<Book> getAllBooks();
 
-     void create(Book book);
+     void createBook(Book book);
 
-     Book delete(Integer id);
+     void deleteBook(Integer id);
+
+     Book updateBook(Book book, Integer id);
 
 }

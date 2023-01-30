@@ -9,11 +9,8 @@ import java.util.List;
 public interface PeopleService {
 
     Person get(Integer id);
-
     List<Person> getAll();
-
-    void create(Person person);
-
-    Person delete(Integer id);
-
+    void createPerson(Person person);
+    void deletePerson(Integer id);
+    Person updatePerson(Person person, Integer id);
 }
