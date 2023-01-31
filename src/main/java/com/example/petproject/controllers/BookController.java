@@ -28,34 +28,34 @@ public class BookController {
 
     @GetMapping
     public List<BookDTO> getBook() {
-        return bookBaseService.getAllBooks().stream().map(converter::convertToBookDTO)
+        return bookBaseService.getAll().stream().map(converter::convertToBookDTO)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public BookDTO getBookById(@PathVariable Integer id) {
-        Book book = bookBaseService.getBookById(id);
+        Book book = bookBaseService.getById(id);
         return converter.convertToBookDTO(book);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> createBook(@RequestBody @Valid BookDTO bookDTO) {
-        bookBaseService.createBook(converter.convertToBook(bookDTO));
+        bookBaseService.create(converter.convertToBook(bookDTO));
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable Integer id) {
-        bookBaseService.deleteBook(id);
+        bookBaseService.delete(id);
         return new ResponseEntity<String>("Книга успешно удалена", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> updateBook( @RequestBody BookDTO bookDTO, @PathVariable("id") Integer id) {
-        bookBaseService.updateBook(converter.convertToBook(bookDTO), id);
+        bookBaseService.update(converter.convertToBook(bookDTO), id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
